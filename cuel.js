@@ -1,4 +1,4 @@
-/* 
+/*
 -------------------------------------------------------------------------------
 
     ** LICENSE ** (MIT LICENSE)
@@ -31,7 +31,7 @@
 
 	if(typeof String.prototype.trim !== "function") {
 		String.prototype.trim = function() {
-			return this.replace(/^\s+|\s+$/g, ''); 
+			return this.replace(/^\s+|\s+$/g, '');
 		}
 	}
 
@@ -50,8 +50,8 @@
 
 	var createListFromHtml = function (html) {
 		html = html.trim();
-		if (html.substring(0,15) == "<!--custom-html") {
-			html = html.substring(15);
+		if (html.substring(0,4) == "<!--") {
+			html = html.substring(4);
 			html = html.substring(0,html.length-3);
 		}
 		var list = [];
@@ -227,7 +227,7 @@
 				return undefined;
 			} else if (child.attributes.id == id) {
 				return child;
-			} else { 
+			} else {
 				if (child.byId !== undefined) {
 					subChild = child.byId(id);
 					if (subChild !== undefined) {
@@ -245,11 +245,11 @@
 		for(var i = 0; i < this.childNodes.length; i += 1) {
 			if (this.childNodes[i].name == name) {
 				list.push(this.childNodes[i]);
-			} 
+			}
 			if (this.childNodes[i].byTag !== undefined) {
 				subList = this.childNodes[i].byTag(name);
 				for (var k = 0; k < subList.length; k += 1) {
-					list.push(subList[k]);		
+					list.push(subList[k]);
 				}
 			}
 		}
@@ -287,7 +287,7 @@
 		this.rootName = rootName;
 		this.fnDef = fnDef;
 	};
-	
+
 	cuel.getElementDefinition = function (name) {
 		for (var i = 0; i < customElements.length; i += 1) {
 			if(customElements[i].customName === name) {
@@ -296,12 +296,12 @@
 		}
 		return undefined;
 	};
-	
-	cuel.defineElement = function (customName,rootName,fnDef) {					
+
+	cuel.defineElement = function (customName,rootName,fnDef) {
 		var newElement = new CustomElement(customName,rootName,fnDef);
 		customElements.push(newElement);
 	};
-	
+
 	cuel.byId = function (id) {
 		return cuel.domTree.byId(id);
 	};
@@ -341,7 +341,9 @@
 	};
 
 	namespace.cuel = cuel;
-	
+
+	//TEST
+
 	setTimeout(function() {
 		var list = createListFromHtml(document.body.innerHTML);
 		document.body.innerHTML = "";
